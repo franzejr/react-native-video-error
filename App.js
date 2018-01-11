@@ -5,7 +5,7 @@
  */
 
 import React, { Component } from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, View, Button } from "react-native";
 import Video from "react-native-video";
 
 const instructions = Platform.select({
@@ -15,6 +15,9 @@ const instructions = Platform.select({
 });
 
 export default class App extends Component<{}> {
+  play = () => {
+    this.video.seek(0);
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -28,15 +31,22 @@ export default class App extends Component<{}> {
           ref={(ref: Video) => {
             this.video = ref;
           }}
-          style={{ height: 100, width: 200 }}
+          style={{ height: 150, width: 250 }}
           source={{
-            uri: "http://www.sample-videos.com/video/mp4/240/big_buck_bunny_240p_30mb.mp4"
+            uri: "http://www.sample-videos.com/video/mp4/240/big_buck_bunny_240p_30mb.mp4",
+            mainVer: 1,
+            patchVer: 0
           }}
           paused={false}
-          onLoad={() => this.video.seek(0)}
+          volume={1.0}
+          muted={false}
+          onError={e => {
+            debugger;
+          }}
           playWhenInactive={false}
           playInBackground={false}
         />
+        <Button onPress={() => this.play()} title="Play" />
         <Text style={styles.instructions}>
           {instructions}
         </Text>
